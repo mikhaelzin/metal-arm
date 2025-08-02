@@ -11,6 +11,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
+import { PostHogProvider } from 'posthog-react-native'
 
 import { useColorScheme } from "@/components/useColorScheme";
 
@@ -50,9 +51,14 @@ export default function RootLayout() {
   }
 
   return (
+    <PostHogProvider apiKey="phc_LjM9iseEcRPltGCHksRQDVZdhjgoPhP1NtsBdwPLntp" autocapture={true} options={{
+      host: 'https://us.i.posthog.com',
+      enableSessionReplay: true,
+  }}>
     <GluestackUIProvider mode="light">
       <RootLayoutNav />
     </GluestackUIProvider>
+  </PostHogProvider>
   );
 }
 

@@ -20,10 +20,8 @@ import {
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { useBle } from "@/components/use-ble";
-// import { useBleExpoGo } from "@/components/use-ble2";
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import { useConnectedDeviceStore } from '@/store';
 
 type Movement = {
   movement: string;
@@ -37,15 +35,14 @@ type Sequence = {
 }
 
 export default function SequencesScreen() {
-  const connectedDevice = useConnectedDeviceStore(state => state.connectedDevice);
   const [showMovementActionSheet, setShowMovementActionSheet] = useState(false);
   const [showTimeActionSheet, setShowTimeActionSheet] = useState(false);
   const [sequences, setSequences] = useState<Sequence[]>([]);
   const [activeSequenceId, setActiveSequenceId] = useState<string | null>(null);
-  const { sendSequenceToDevice } = useBle();
+  const { sendData, connectedDevice } = useBle();
 
   function handleSendSequence() {
-    sendSequenceToDevice(formatSequence());
+    sendData(formatSequence());
   }
 
   function handleMovementSelected(movement: Movement) {
@@ -59,7 +56,7 @@ export default function SequencesScreen() {
 
     setShowMovementActionSheet(false);
   }
-  
+
   function handleAddSequence() {
     if (sequences.length === 5) {
       return;
@@ -136,7 +133,7 @@ export default function SequencesScreen() {
                 <VStack key={sequence.id}>
                   <Text>Sequência {index + 1}</Text>
                   <Text>Tempo: {sequence.time}ms</Text>
-                  
+
                 </VStack>
 
 
@@ -150,7 +147,7 @@ export default function SequencesScreen() {
                   </Button>
                 </HStack>
               </HStack>
-              
+
               <Text>Movimentos: {sequence.movements.map((movement) => `${movement.movement}-${movement.rotation}°`).join(", ")}</Text>
             </VStack>
           ))}

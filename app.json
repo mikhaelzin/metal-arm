@@ -36,18 +36,15 @@
     "plugins": [
       "expo-router",
       [
-        "react-native-ble-plx",
+        "with-rn-bluetooth-classic",
         {
-          "isBackgroundEnabled": true,
-          "modes": [
-            "peripheral",
-            "central"
-          ],
-          "bluetoothAlwaysPermission": "Allow $(PRODUCT_NAME) to connect to bluetooth devices"
+          "peripheralUsageDescription": "Allow Metal Arm to check bluetooth peripheral info",
+          "alwaysUsageDescription": "Allow Metal Arm to always use bluetooth info"
         }
       ],
       "expo-font",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true
